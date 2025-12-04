@@ -16,8 +16,16 @@ const AppNavigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="PayslipList">
-        <Stack.Screen name="PayslipList" component={PayslipListScreen} options={{ title: 'Payslips' }} />
-        <Stack.Screen name="PayslipDetails" component={PayslipDetailsScreen} options={{ title: 'Payslip Details' }} />
+        <Stack.Screen
+          name="PayslipList"
+          component={PayslipListScreen}
+          options={{ title: 'Payslips' }}
+        />
+        <Stack.Screen
+          name="PayslipDetails"
+          component={PayslipDetailsScreen}
+          options={{ title: 'Payslip Details' }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

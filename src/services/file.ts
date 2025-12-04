@@ -8,7 +8,8 @@ const requestStoragePermission = async () => {
         PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
         {
           title: 'Payslip storage permission',
-          message: 'This app needs access to your storage to download payslips.',
+          message:
+            'This app needs access to your storage to download payslips.',
           buttonNeutral: 'Ask Me Later',
           buttonNegative: 'Cancel',
           buttonPositive: 'OK',
@@ -26,7 +27,10 @@ const requestStoragePermission = async () => {
 export const downloadPayslip = async (fileName: string) => {
   const hasPermission = await requestStoragePermission();
   if (!hasPermission) {
-    Alert.alert('Permission Denied', 'Storage permission is required to download the payslip.');
+    Alert.alert(
+      'Permission Denied',
+      'Storage permission is required to download the payslip.',
+    );
     return;
   }
 
@@ -34,10 +38,10 @@ export const downloadPayslip = async (fileName: string) => {
 
   try {
     if (Platform.OS === 'android') {
-        await RNFS.copyFileAssets(fileName, destPath);
+      await RNFS.copyFileAssets(fileName, destPath);
     } else {
-        const sourcePath = `${RNFS.MainBundlePath}/${fileName}`;
-        await RNFS.copyFile(sourcePath, destPath);
+      const sourcePath = `${RNFS.MainBundlePath}/${fileName}`;
+      await RNFS.copyFile(sourcePath, destPath);
     }
     Alert.alert('Success', `Payslip downloaded to ${destPath}`);
   } catch (error) {

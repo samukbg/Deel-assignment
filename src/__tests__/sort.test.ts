@@ -1,16 +1,30 @@
 import { usePayslipsStore } from '../store/payslips';
 
 const mockPayslips = [
-  { id: '1', fromDate: '2025-11-01', toDate: '2025-11-30', file: 'sample-payslip.pdf' },
-  { id: '2', fromDate: '2025-10-01', toDate: '2025-10-31', file: 'sample-payslip.pdf' },
-  { id: '3', fromDate: '2025-12-01', toDate: '2025-12-31', file: 'sample-payslip.pdf' },
+  {
+    id: '1',
+    fromDate: '2025-11-01',
+    toDate: '2025-11-30',
+    file: 'sample-payslip.pdf',
+  },
+  {
+    id: '2',
+    fromDate: '2025-10-01',
+    toDate: '2025-10-31',
+    file: 'sample-payslip.pdf',
+  },
+  {
+    id: '3',
+    fromDate: '2025-12-01',
+    toDate: '2025-12-31',
+    file: 'sample-payslip.pdf',
+  },
 ];
 
 describe('Payslips Store Sorting', () => {
-
-    beforeEach(() => {
-        usePayslipsStore.setState({ payslips: mockPayslips });
-    });
+  beforeEach(() => {
+    usePayslipsStore.setState({ payslips: mockPayslips });
+  });
 
   it('sorts payslips by most recent first', () => {
     const { sortPayslips } = usePayslipsStore.getState();

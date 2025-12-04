@@ -8,5 +8,8 @@ export const formatPeriod = (fromDate: string, toDate: string): string => {
     day: '2-digit',
   };
 
-  return `${from.toLocaleDateString('en-US', { ...options, timeZone: 'UTC' })} - ${to.toLocaleDateString('en-US', { ...options, timeZone: 'UTC' })}`;
+  return `${from.toLocaleDateString('en-US', {
+    ...options,
+    timeZone: 'UTC',
+  })} - ${to.toLocaleDateString('en-US', { ...options, timeZone: 'UTC' })}`;
 };

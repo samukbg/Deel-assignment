@@ -22,9 +22,24 @@ const PayslipDetailsScreen = ({ route }: Props) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.detailsContainer}>
-        <Text style={styles.text} accessibilityLabel={`ID: ${payslip.id}`}>ID: {payslip.id}</Text>
-        <Text style={styles.text} accessibilityLabel={`Period: ${formatPeriod(payslip.fromDate, payslip.toDate)}`}>Period: {formatPeriod(payslip.fromDate, payslip.toDate)}</Text>
-        <Text style={styles.text} accessibilityLabel={`Type: ${payslip.file.split('.').pop()}`}>File: {payslip.file}</Text>
+        <Text style={styles.text} accessibilityLabel={`ID: ${payslip.id}`}>
+          ID: {payslip.id}
+        </Text>
+        <Text
+          style={styles.text}
+          accessibilityLabel={`Period: ${formatPeriod(
+            payslip.fromDate,
+            payslip.toDate,
+          )}`}
+        >
+          Period: {formatPeriod(payslip.fromDate, payslip.toDate)}
+        </Text>
+        <Text
+          style={styles.text}
+          accessibilityLabel={`Type: ${payslip.file.split('.').pop()}`}
+        >
+          File: {payslip.file}
+        </Text>
       </View>
       <Button
         title="Download"

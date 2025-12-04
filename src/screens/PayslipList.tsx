@@ -1,5 +1,12 @@
 import React from 'react';
-import { View, Text, FlatList, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  Button,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { usePayslipsStore } from '../store/payslips';
 import { formatPeriod } from '../utils/date';
@@ -21,12 +28,17 @@ const PayslipListScreen = ({ navigation }: Props) => {
   const { payslips, sortPayslips } = usePayslipsStore();
 
   const renderItem = ({ item }: { item: Payslip }) => (
-    <TouchableOpacity 
+    <TouchableOpacity
       onPress={() => navigation.navigate('PayslipDetails', { payslip: item })}
-      accessibilityLabel={`Detail for ${formatPeriod(item.fromDate, item.toDate)}`}
+      accessibilityLabel={`Detail for ${formatPeriod(
+        item.fromDate,
+        item.toDate,
+      )}`}
     >
       <View style={styles.itemContainer}>
-        <Text style={styles.itemText}>{formatPeriod(item.fromDate, item.toDate)}</Text>
+        <Text style={styles.itemText}>
+          {formatPeriod(item.fromDate, item.toDate)}
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -34,13 +46,23 @@ const PayslipListScreen = ({ navigation }: Props) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.sortContainer}>
-        <Button title="Recent First" onPress={() => sortPayslips('recent')} color={colors.primary} accessibilityLabel="Sort payslips by most recent first" />
-        <Button title="Oldest First" onPress={() => sortPayslips('oldest')} color={colors.primary} accessibilityLabel="Sort payslips by oldest first" />
+        <Button
+          title="Recent First"
+          onPress={() => sortPayslips('recent')}
+          color={colors.primary}
+          accessibilityLabel="Sort payslips by most recent first"
+        />
+        <Button
+          title="Oldest First"
+          onPress={() => sortPayslips('oldest')}
+          color={colors.primary}
+          accessibilityLabel="Sort payslips by oldest first"
+        />
       </View>
       <FlatList
         data={payslips}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={item => item.id}
         contentContainerStyle={styles.listContent}
       />
     </SafeAreaView>
