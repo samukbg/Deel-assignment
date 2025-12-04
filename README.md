@@ -37,9 +37,8 @@ State managed with Zustand for simplicity. Native file operations via react-nati
 ## Limitations
 
 - Single PDF reused across all payslips
-- No filter functionality
 
 ## Future Improvements
 
 - Backend API integration
-- Search/filter by year
+- Advanced filtering by text

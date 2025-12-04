@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   Button,
   StyleSheet,
   TouchableOpacity,
+  TextInput,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { usePayslipsStore } from '../store/payslips';
@@ -26,6 +27,22 @@ type Props = {
 
 const PayslipListScreen = ({ navigation }: Props) => {
   const { payslips, sortPayslips } = usePayslipsStore();
+  const [filterText, setFilterText] = useState('');
+
+  const filteredPayslips = useMemo(() => {
+    if (!filterText.trim()) {
+      return payslips;
+    }
+    const searchText = filterText.toLowerCase();
+    return payslips.filter(payslip => {
+      const period = formatPeriod(payslip.fromDate, payslip.toDate);
+      return (
+        payslip.id.toLowerCase().includes(searchText) ||
+        period.toLowerCase().includes(searchText) ||
+        payslip.file.toLowerCase().includes(searchText)
+      );
+    });
+  }, [payslips, filterText]);
 
   const renderItem = ({ item }: { item: Payslip }) => (
     <TouchableOpacity
@@ -45,6 +62,13 @@ const PayslipListScreen = ({ navigation }: Props) => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <TextInput
+        style={styles.searchInput}
+        placeholder="Filter payslips..."
+        value={filterText}
+        onChangeText={setFilterText}
+        accessibilityLabel="Filter payslips by text"
+      />
       <View style={styles.sortContainer}>
         <Button
           title="Recent First"
@@ -60,7 +84,7 @@ const PayslipListScreen = ({ navigation }: Props) => {
         />
       </View>
       <FlatList
-        data={payslips}
+        data={filteredPayslips}
         renderItem={renderItem}
         keyExtractor={item => item.id}
         contentContainerStyle={styles.listContent}
@@ -73,6 +97,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
+  },
+  searchInput: {
+    height: 40,
+    borderWidth: 1,
+    borderColor: colors.primary,
+    fontSize: fontSizes.medium,
+    color: colors.text,
   },
   sortContainer: {
     flexDirection: 'row',
