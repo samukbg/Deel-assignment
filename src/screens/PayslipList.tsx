@@ -23,7 +23,7 @@ const PayslipListScreen = ({ navigation }: Props) => {
   const renderItem = ({ item }: { item: Payslip }) => (
     <TouchableOpacity 
       onPress={() => navigation.navigate('PayslipDetails', { payslip: item })}
-      accessibilityLabel={`View details for payslip from ${formatPeriod(item.fromDate, item.toDate)}`}
+      accessibilityLabel={`Detail for ${formatPeriod(item.fromDate, item.toDate)}`}
     >
       <View style={styles.itemContainer}>
         <Text style={styles.itemText}>{formatPeriod(item.fromDate, item.toDate)}</Text>
