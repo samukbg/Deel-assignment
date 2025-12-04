@@ -1,6 +1,6 @@
 # Payslips App
 
-Payslip viewer with download.
+Payslip viewer with download functionality.
 
 ## Prerequisites
 
@@ -24,7 +24,24 @@ npm test
 
 ## Stack
 
-- React Native CLI
-- React Navigation
-- Zustand
-- react-native-fs
+- React Native CLI 0.82
+- React Navigation (Stack)
+- Zustand (state)
+- react-native-fs (file handling)
+
+## Architecture
+
+Clean separation: screens, navigation, store, services, utils, types.
+State managed with Zustand for simplicity. Native file operations via react-native-fs with Android permission handling.
+
+## Limitations
+
+- Single PDF reused across all payslips
+- No file preview
+- No filter functionality
+
+## Future Improvements
+
+- Backend API integration
+- PDF preview capability
+- Search/filter by year
