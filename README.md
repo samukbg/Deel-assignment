@@ -32,16 +32,14 @@ npm test
 ## Architecture
 
 Clean separation: screens, navigation, store, services, utils, types.
-State managed with Zustand for simplicity. Native file operations via react-native-fs with Android permission handling.
+State managed with Zustand for simplicity. Native file operations via react-native-fs with Android permission handling. PDF preview via native viewer using Linking API.
 
 ## Limitations
 
 - Single PDF reused across all payslips
-- No file preview
 - No filter functionality
 
 ## Future Improvements
 
 - Backend API integration
-- PDF preview capability
 - Search/filter by year

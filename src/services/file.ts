@@ -24,6 +24,22 @@ const requestStoragePermission = async () => {
   return true;
 };
 
+export const getFilePath = async (fileName: string): Promise<string> => {
+  const destPath = `${RNFS.DocumentDirectoryPath}/${fileName}`;
+  const exists = await RNFS.exists(destPath);
+
+  if (!exists) {
+    if (Platform.OS === 'android') {
+      await RNFS.copyFileAssets(fileName, destPath);
+    } else {
+      const sourcePath = `${RNFS.MainBundlePath}/${fileName}`;
+      await RNFS.copyFile(sourcePath, destPath);
+    }
+  }
+
+  return destPath;
+};
+
 export const downloadPayslip = async (fileName: string) => {
   const hasPermission = await requestStoragePermission();
   if (!hasPermission) {

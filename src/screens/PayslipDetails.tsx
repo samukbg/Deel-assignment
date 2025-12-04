@@ -1,10 +1,18 @@
 import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  Alert,
+  Linking,
+  Platform,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation';
 import { colors, fontSizes } from '../constants/theme';
-import { downloadPayslip } from '../services/file';
+import { downloadPayslip, getFilePath } from '../services/file';
 import { formatPeriod } from '../utils/date';
 
 type PayslipDetailsScreenRouteProp = RouteProp<
@@ -18,6 +26,17 @@ type Props = {
 
 const PayslipDetailsScreen = ({ route }: Props) => {
   const { payslip } = route.params;
+
+  const handlePreview = async () => {
+    try {
+      const filePath = await getFilePath(payslip.file);
+      const uri = Platform.OS === 'android' ? `file://${filePath}` : filePath;
+      await Linking.openURL(uri);
+    } catch (error) {
+      console.error('Preview error:', error);
+      Alert.alert('Error', 'Failed to open payslip');
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -41,12 +60,20 @@ const PayslipDetailsScreen = ({ route }: Props) => {
           File: {payslip.file}
         </Text>
       </View>
-      <Button
-        title="Download"
-        onPress={() => downloadPayslip(payslip.file)}
-        color={colors.primary}
-        accessibilityLabel="Download"
-      />
+      <View style={styles.buttonContainer}>
+        <Button
+          title="Preview"
+          onPress={handlePreview}
+          color={colors.primary}
+          accessibilityLabel="Preview payslip"
+        />
+        <Button
+          title="Download"
+          onPress={() => downloadPayslip(payslip.file)}
+          color={colors.primary}
+          accessibilityLabel="Download payslip"
+        />
+      </View>
     </SafeAreaView>
   );
 };
@@ -55,6 +82,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
+    padding: 16,
   },
   detailsContainer: {
     marginBottom: 20,
@@ -62,6 +90,10 @@ const styles = StyleSheet.create({
   text: {
     fontSize: fontSizes.medium,
     color: colors.text,
+    marginBottom: 8,
+  },
+  buttonContainer: {
+    gap: 10,
   },
 });
 

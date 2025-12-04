@@ -9,6 +9,7 @@
 /android/build/
 /android/.gradle/
 /android/app/.cxx/
+/android/.kotlin/
 *.keystore
 !debug.keystore
 local.properties
